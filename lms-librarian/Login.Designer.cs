@@ -28,94 +28,102 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBoxUsername = new System.Windows.Forms.TextBox();
-            this.textBoxPassword = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.buttonCancel = new System.Windows.Forms.Button();
-            this.buttonLogin = new System.Windows.Forms.Button();
-            this.SuspendLayout();
+            label1=new Label();
+            label2=new Label();
+            textBoxUsername=new TextBox();
+            textBoxPassword=new TextBox();
+            label3=new Label();
+            buttonCancel=new Button();
+            buttonLogin=new Button();
+            SuspendLayout();
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 37);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "username :";
+            label1.AutoSize=true;
+            label1.Location=new Point(17, 62);
+            label1.Margin=new Padding(4, 0, 4, 0);
+            label1.Name="label1";
+            label1.Size=new Size(98, 25);
+            label1.TabIndex=0;
+            label1.Text="username :";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 66);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(63, 15);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "password :";
+            label2.AutoSize=true;
+            label2.Location=new Point(20, 110);
+            label2.Margin=new Padding(4, 0, 4, 0);
+            label2.Name="label2";
+            label2.Size=new Size(98, 25);
+            label2.TabIndex=1;
+            label2.Text="password :";
             // 
             // textBoxUsername
             // 
-            this.textBoxUsername.Location = new System.Drawing.Point(83, 34);
-            this.textBoxUsername.Name = "textBoxUsername";
-            this.textBoxUsername.Size = new System.Drawing.Size(100, 23);
-            this.textBoxUsername.TabIndex = 2;
+            textBoxUsername.Location=new Point(119, 57);
+            textBoxUsername.Margin=new Padding(4, 5, 4, 5);
+            textBoxUsername.Name="textBoxUsername";
+            textBoxUsername.Size=new Size(141, 31);
+            textBoxUsername.TabIndex=2;
             // 
             // textBoxPassword
             // 
-            this.textBoxPassword.Location = new System.Drawing.Point(83, 63);
-            this.textBoxPassword.Name = "textBoxPassword";
-            this.textBoxPassword.Size = new System.Drawing.Size(100, 23);
-            this.textBoxPassword.TabIndex = 3;
+            textBoxPassword.Location=new Point(119, 105);
+            textBoxPassword.Margin=new Padding(4, 5, 4, 5);
+            textBoxPassword.Name="textBoxPassword";
+            textBoxPassword.Size=new Size(141, 31);
+            textBoxPassword.TabIndex=3;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 9);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(37, 15);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Login";
+            label3.AutoSize=true;
+            label3.Location=new Point(17, 15);
+            label3.Margin=new Padding(4, 0, 4, 0);
+            label3.Name="label3";
+            label3.Size=new Size(56, 25);
+            label3.TabIndex=4;
+            label3.Text="Login";
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(27, 108);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-            this.buttonCancel.TabIndex = 5;
-            this.buttonCancel.Text = "Cancel";
-            this.buttonCancel.UseVisualStyleBackColor = true;
+            buttonCancel.Location=new Point(39, 180);
+            buttonCancel.Margin=new Padding(4, 5, 4, 5);
+            buttonCancel.Name="buttonCancel";
+            buttonCancel.Size=new Size(107, 38);
+            buttonCancel.TabIndex=5;
+            buttonCancel.Text="Cancel";
+            buttonCancel.UseVisualStyleBackColor=true;
             // 
             // buttonLogin
             // 
-            this.buttonLogin.Location = new System.Drawing.Point(108, 108);
-            this.buttonLogin.Name = "buttonLogin";
-            this.buttonLogin.Size = new System.Drawing.Size(75, 23);
-            this.buttonLogin.TabIndex = 6;
-            this.buttonLogin.Text = "Login";
-            this.buttonLogin.UseVisualStyleBackColor = true;
-            this.buttonLogin.Click += new System.EventHandler(this.buttonLogin_Click);
+            buttonLogin.Location=new Point(154, 180);
+            buttonLogin.Margin=new Padding(4, 5, 4, 5);
+            buttonLogin.Name="buttonLogin";
+            buttonLogin.Size=new Size(107, 38);
+            buttonLogin.TabIndex=6;
+            buttonLogin.Text="Login";
+            buttonLogin.UseVisualStyleBackColor=true;
+            buttonLogin.Click+=buttonLogin_Click;
             // 
             // Login
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(204, 148);
-            this.Controls.Add(this.buttonLogin);
-            this.Controls.Add(this.buttonCancel);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBoxPassword);
-            this.Controls.Add(this.textBoxUsername);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            this.Name = "Login";
-            this.Text = "Login";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions=new SizeF(10F, 25F);
+            AutoScaleMode=AutoScaleMode.Font;
+            ClientSize=new Size(291, 247);
+            Controls.Add(buttonLogin);
+            Controls.Add(buttonCancel);
+            Controls.Add(label3);
+            Controls.Add(textBoxPassword);
+            Controls.Add(textBoxUsername);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            FormBorderStyle=FormBorderStyle.FixedSingle;
+            Margin=new Padding(4, 5, 4, 5);
+            MaximizeBox=false;
+            Name="Login";
+            Text="Login";
+            Load+=Login_Load;
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

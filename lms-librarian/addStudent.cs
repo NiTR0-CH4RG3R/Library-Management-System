@@ -10,22 +10,21 @@ using System.Windows.Forms;
 
 namespace lms_librarian
 {
-    public partial class Dashboard : Form
+    public partial class addStudent : Form
     {
-        public Dashboard()
+        public addStudent()
         {
             InitializeComponent();
         }
 
-        private void Dashboard_Load(object sender, EventArgs e)
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void addStudent_Load(object sender, EventArgs e)
         {
-            addStudent ast = new addStudent();
-            ast.Show();
+
         }
     }
 }

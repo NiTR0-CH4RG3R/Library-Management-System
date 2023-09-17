@@ -22,7 +22,13 @@ namespace lms_librarian
             this.Hide();
             var dashboard = new Dashboard();
             dashboard.FormClosed += (s, args) => this.Close();
-            dashboard.Show(); 
+            dashboard.Show();
+            
+        }
+
+        private void Login_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
