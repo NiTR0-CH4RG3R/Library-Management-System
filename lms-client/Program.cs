@@ -11,7 +11,8 @@ namespace lms_client
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Login());
+            var formDashboard = new Dashboard();
+            Application.Run(formDashboard);
         }
     }
 }
