@@ -1,3 +1,5 @@
+using lms_client.Model;
+
 namespace lms_client
 {
     internal static class Program
@@ -8,10 +10,13 @@ namespace lms_client
         [STAThread]
         static void Main()
         {
+            // This causes LmsClientApplication singleton to be initialize at the begining of the program
+            var app = LmsClientApplication.Instance;
+
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            var formDashboard = new Dashboard();
+            var formDashboard = new View.Dashboard();
             Application.Run(formDashboard);
         }
     }
