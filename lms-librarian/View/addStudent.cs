@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace lms_librarian
+namespace lms_librarian.View
 {
     public partial class addStudent : Form
     {

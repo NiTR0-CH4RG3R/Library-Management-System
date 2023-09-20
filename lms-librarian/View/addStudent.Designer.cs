@@ -1,4 +1,4 @@
-﻿namespace lms_librarian
+﻿namespace lms_librarian.View
 {
     partial class addStudent
     {

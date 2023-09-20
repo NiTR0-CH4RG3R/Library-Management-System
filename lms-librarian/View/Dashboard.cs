@@ -27,5 +27,10 @@ namespace lms_librarian.View
             addStudent ast = new addStudent();
             ast.Show();
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }
