@@ -1,4 +1,5 @@
-﻿using System;
+﻿using lms_client.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,14 +9,12 @@ namespace lms_client.Controller
 {
     internal class BookController
     {
-        List<lms_common.Model.Book> GetBooks(lms_common.Model.Book book)
+        public List<lms_common.Model.Book> GetBooks(lms_common.Model.Book book)
         {
-            var books = new List<lms_common.Model.Book>();
-            // Logic for getting books from the database through Application layer
-            return books;
+            return LmsClientApplication.Instance.Database.SelectFrom(book) ;
         }
 
-        lms_common.Model.Book GetBookByISBN(string ISBN)
+        public lms_common.Model.Book GetBookByISBN(string ISBN)
         {
             return new lms_common.Model.Book();
         }

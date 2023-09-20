@@ -16,7 +16,7 @@ namespace lms_librarian
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new lms_common.View.Login());
+            Application.Run(new View.Dashboard());
         }
     }
 }

@@ -21,15 +21,22 @@ namespace lms_librarian.Model
         private LmsLibrarianApplication()
         {
             // Initialize the database
+            _databaseUsername = "lms_librarian";
+            _databasePassword = "Librarian@321";
             _database = new lms_common.Database(_databaseUsername, _databasePassword);
         }
 
         public bool Authenticate(Model.Librarian librarian)
         {
             if (_authenticated) return true;
-            // Authentication logic goes here
 
-            _authenticatedLibrarian = librarian;
+            var users = _database.SelectFrom(librarian);
+            if (users.Any())
+            {
+                _authenticated = true;
+                _authenticatedLibrarian = librarian;
+            }
+
             return _authenticated;
         }
 

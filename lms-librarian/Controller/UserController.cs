@@ -1,4 +1,5 @@
-﻿using System;
+﻿using lms_librarian.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,19 +11,19 @@ namespace lms_librarian.Controller
     {
         public List<lms_common.Model.User> GetUsers(lms_common.Model.User user)
         {
-            var users = new List<lms_common.Model.User>();
+            var users = Model.LmsLibrarianApplication.Instance.Database.SelectFrom(user);
 
             return users;
         }
 
-        void AddUser(lms_common.Model.User user)
+        public void AddUser(lms_common.Model.User user)
         {
-
+            Model.LmsLibrarianApplication.Instance.Database.InsertInto(user);
         }
 
-        void RemoveUser(lms_common.Model.User user)
+        public void RemoveUser(lms_common.Model.User user)
         {
-
+            Model.LmsLibrarianApplication.Instance.Database.DeleteFrom(user);
         }
     }
 }

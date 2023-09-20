@@ -7,9 +7,19 @@ using System.Data.SqlClient;
 using System.Reflection;
 using System.Reflection.Metadata;
 using System.Data;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
+using System.Collections;
+using System.Reflection.Metadata.Ecma335;
+using Microsoft.Win32;
 
 namespace lms_common
 {
+    [AttributeUsage(AttributeTargets.Field)]
+    public class PrimaryKey : Attribute
+    {
+
+    }
+
     public class Database
     {
         private string _databaseHost = "DESKTOP-TGA2QCA";
@@ -33,6 +43,21 @@ namespace lms_common
             _connection.Open();
         }
 
+        static string GetValueStringAccordingToType( string typename, Object? value )
+        {
+            if (value == null) return "NULL";
+            string result = "";
+            switch (typename)
+            {
+                case null: break;
+                case "String": result = $"\'{value}\'" ; break;
+                case "DateTime": result = $"\'{((DateTime)value).ToString("yyyy-MM-dd HH:mm:ss")}\'"; break;
+                case "Boolean": result = (bool)value ? "1" : "0"; break;
+                default: result = value == null ? "" : value.ToString(); break;
+            }
+            return result;
+        }
+
         public void InsertInto<T>(T record)
         {
             var fields = typeof(T).GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
@@ -42,13 +67,8 @@ namespace lms_common
             {
                 table += fields[i].Name;
                 if (i != fields.Length - 1) table += ",";
-
-
-                switch(fields[i].FieldType.Name)
-                {
-                    case "String": values += $"\'{fields[i].GetValue(record)}\'"; break;
-                    default: values += fields[i].GetValue(record); break;
-                }
+                Type type = Nullable.GetUnderlyingType(fields[i].FieldType) ?? fields[i].FieldType;
+                values += GetValueStringAccordingToType(type.Name, fields[i].GetValue(record));
 
                 if (i != fields.Length - 1) values += ",";
 
@@ -56,12 +76,12 @@ namespace lms_common
             table += ")";
             values += ")";
 
-            string query = $"INSERT INTO {typeof(T).Name}{table} VALUES{values}";
+            string query = $"INSERT INTO [{typeof(T).Name}]{table} VALUES{values}";
 
             new SqlCommand(query, _connection).ExecuteNonQuery();
         }
 
-        public List<T> SelectRecords<T>(T record)
+        public List<T> SelectFrom<T>(T record) where T : new()
         {
             var results = new List<T>();
 
@@ -75,12 +95,8 @@ namespace lms_common
                 if (fields[i].GetValue(record) == null) selects.Add(fields[i].Name);
                 else
                 {
-                    string value = "";
-                    switch (fields[i].FieldType.Name)
-                    {
-                        case "String": value += $"\'{fields[i].GetValue(record)}\'"; break;
-                        default: value += fields[i].GetValue(record); break;
-                    }
+                    Type type = Nullable.GetUnderlyingType(fields[i].FieldType) ?? fields[i].FieldType;
+                    string value = GetValueStringAccordingToType(type.Name, fields[i].GetValue(record));
                     wheres.Add(fields[i].Name, value);
                 }
             }
@@ -96,7 +112,59 @@ namespace lms_common
                 }
             else query += " * ";
 
-            query += $"FROM {typeof(T).Name} WHERE";
+            query += $"FROM [{typeof(T).Name}]";
+
+            if (wheres.Count > 0)
+            {
+                query += " WHERE";
+                for (int i = 0; i < wheres.Count; i++)
+                {
+                    var pair = wheres.ElementAt(i);
+                    query += $" {pair.Key}={pair.Value}";
+                    if (i != wheres.Count - 1) query += " AND";
+                }
+            }
+
+            var reader = new SqlCommand(query, _connection).ExecuteReader();
+
+            while(reader.Read())
+            {
+                T result = new T();
+                for (int i = 0; i < fields.Length; i++)
+                {
+                    if (fields[i].GetValue(record) == null) {
+                        //var t = typeof(reader.GetValue(fields[i].Name));
+                        fields[i].SetValue(result, reader.IsDBNull(fields[i].Name) ? null : reader.GetValue(fields[i].Name));
+                    } else
+                    {
+                        fields[i].SetValue(result, fields[i].GetValue(record));
+                    }
+                }
+                results.Add(result);
+            }
+
+            reader.Close();
+
+            return results;
+        }
+
+        public void DeleteFrom<T>(T record)
+        {
+            var fields = typeof(T).GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
+
+            Dictionary<string, string> wheres = new Dictionary<string, string>();
+
+            for (int i = 0; i < fields.Length; i++)
+            {
+                if (fields[i].GetValue(record) != null)
+                {
+                    Type type = Nullable.GetUnderlyingType(fields[i].FieldType) ?? fields[i].FieldType;
+                    string value = GetValueStringAccordingToType(type.Name, fields[i].GetValue(record));
+                    wheres.Add(fields[i].Name, value);
+                }
+            }
+
+            string query = $"DELETE FROM [{typeof(T).Name}] WHERE";
 
             for (int i = 0; i < wheres.Count; i++)
             {
@@ -105,21 +173,51 @@ namespace lms_common
                 if (i != wheres.Count - 1) query += " AND";
             }
 
-            var reader = new SqlCommand(query, _connection).ExecuteReader();
+            new SqlCommand(query, _connection).ExecuteNonQuery();
+        }
 
-            while(reader.Read())
+        public void UpdateByPrimaryKey<T>(T record)
+        {
+            var fields = typeof(T).GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
+
+            Dictionary<string, string> wheres = new Dictionary<string, string>();
+            Dictionary<string, string> sets = new Dictionary<string, string>();
+
+            for (int i = 0; i < fields.Length; i++)
             {
-                T result = record;
-                for (int i = 0; i < fields.Length; i++)
+                if (fields[i].GetValue(record) != null)
                 {
-                    if (fields[i].GetValue(result) == null) {
-                        fields[i].SetValue(result, reader.GetValue(fields[i].Name));
+                    if (fields[i].GetCustomAttribute(typeof(PrimaryKey), false) == null)
+                    {
+                        Type type = Nullable.GetUnderlyingType(fields[i].FieldType) ?? fields[i].FieldType;
+                        sets.Add(fields[i].Name, GetValueStringAccordingToType(type.Name, fields[i].GetValue(record)));
+                    }
+                    else if (fields[i].GetCustomAttribute(typeof(PrimaryKey), false) != null)
+                    {
+                        Type type = Nullable.GetUnderlyingType(fields[i].FieldType) ?? fields[i].FieldType;
+                        wheres.Add(fields[i].Name, GetValueStringAccordingToType(type.Name, fields[i].GetValue(record)));
                     }
                 }
-                results.Add(result);
             }
 
-            return results;
+            string query = $"UPDATE [{typeof(T).Name}] SET";
+
+            for (int i = 0; i < sets.Count; i++)
+            {
+                var pair = sets.ElementAt(i);
+                query += $" {pair.Key}={pair.Value}";
+                if (i != wheres.Count - 1) query += ",";
+            }
+
+            query += " WHERE";
+            for (int i = 0; i < wheres.Count; i++)
+            {
+                var pair = wheres.ElementAt(i);
+                query += $" {pair.Key}={pair.Value}";
+                if (i != wheres.Count - 1) query += " AND";
+            }
+
+            new SqlCommand(query, _connection).ExecuteNonQuery();
         }
 
         public void Test()

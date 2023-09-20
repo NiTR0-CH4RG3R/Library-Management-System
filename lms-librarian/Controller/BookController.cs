@@ -1,4 +1,5 @@
-﻿using System;
+﻿using lms_common.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,26 +9,27 @@ namespace lms_librarian.Controller
 {
     internal class BookController
     {
-        List<lms_common.Model.Book> GetBooks(lms_common.Model.Book book)
+        public List<lms_common.Model.Book> GetBooks(lms_common.Model.Book book)
         {
-            var books = new List<lms_common.Model.Book>();
-            // Logic for getting books from the database through Application layer
+            // Logic for validating the book object
+            var books = Model.LmsLibrarianApplication.Instance.Database.SelectFrom(book);
             return books;
         }
 
-        lms_common.Model.Book GetBookByISBN(string ISBN)
+        public lms_common.Model.Book GetBookByISBN(string ISBN)
         {
-            return new lms_common.Model.Book();
+            // Logic for validating the ISBN
+            return Model.LmsLibrarianApplication.Instance.Database.SelectFrom(new lms_common.Model.Book { ISBN = ISBN, Author = null, Title = null, Qty = null })[0];
         }
 
-        void AddBook(lms_common.Model.Book book)
+        public void AddBook(lms_common.Model.Book book)
         {
-
+            Model.LmsLibrarianApplication.Instance.Database.InsertInto(book);
         }
 
-        void RemoveBook(lms_common.Model.Book book)
+        public void RemoveBook(lms_common.Model.Book book)
         {
-
+            Model.LmsLibrarianApplication.Instance.Database.DeleteFrom(book);
         }
     }
 }

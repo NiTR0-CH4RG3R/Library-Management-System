@@ -25,9 +25,14 @@ namespace lms_client.Model
         public bool Authenticate(lms_common.Model.User user)
         {
             if (_authenticated) return true;
-            // Authentication logic goes here
 
-            _authenticatedUser = user;
+            var users = _database.SelectFrom(user);
+            if (users.Any())
+            {
+                _authenticated = true;
+                _authenticatedUser = user;
+            }
+
             return _authenticated;
         }
 

@@ -40,7 +40,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(40, 9);
+            this.label1.Location = new System.Drawing.Point(85, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(37, 15);
             this.label1.TabIndex = 0;
@@ -49,11 +49,11 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(11, 39);
+            this.label2.Location = new System.Drawing.Point(21, 39);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(68, 15);
+            this.label2.Size = new System.Drawing.Size(58, 15);
             this.label2.TabIndex = 1;
-            this.label2.Text = "username : ";
+            this.label2.Text = "NIC No. : ";
             // 
             // label3
             // 
@@ -62,7 +62,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(66, 15);
             this.label3.TabIndex = 2;
-            this.label3.Text = "password : ";
+            this.label3.Text = "Password : ";
             // 
             // textBoxUsername
             // 
@@ -96,6 +96,7 @@
             this.buttonCancel.TabIndex = 6;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // Login
             // 

@@ -12,6 +12,7 @@ namespace lms_client
         {
             // This causes LmsClientApplication singleton to be initialize at the begining of the program
             var app = LmsClientApplication.Instance;
+            //app.Database.Test();
 
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
