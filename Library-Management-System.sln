@@ -12,7 +12,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lms-librarian", "lms-librar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lms-common", "lms-common\lms-common.csproj", "{0B2CE14A-BFBB-4FD6-860C-98A63C32BDEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{1485B4F9-593E-449C-B368-6DAD06837089}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testing", "Testing\Testing.csproj", "{1485B4F9-593E-449C-B368-6DAD06837089}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
