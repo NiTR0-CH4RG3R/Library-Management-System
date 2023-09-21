@@ -37,13 +37,13 @@
             this.textBoxAuthor = new System.Windows.Forms.TextBox();
             this.textBoxQty = new System.Windows.Forms.TextBox();
             this.listView = new System.Windows.Forms.ListView();
-            this.buttonAdd = new System.Windows.Forms.Button();
-            this.buttonSearch = new System.Windows.Forms.Button();
-            this.buttonRemove = new System.Windows.Forms.Button();
             this.ISBN = new System.Windows.Forms.ColumnHeader();
             this.Title = new System.Windows.Forms.ColumnHeader();
             this.Author = new System.Windows.Forms.ColumnHeader();
             this.Qty = new System.Windows.Forms.ColumnHeader();
+            this.buttonAdd = new System.Windows.Forms.Button();
+            this.buttonSearch = new System.Windows.Forms.Button();
+            this.buttonRemove = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelISBN
@@ -131,6 +131,22 @@
             this.listView.UseCompatibleStateImageBehavior = false;
             this.listView.View = System.Windows.Forms.View.Details;
             // 
+            // ISBN
+            // 
+            this.ISBN.Text = "ISBN";
+            // 
+            // Title
+            // 
+            this.Title.Text = "Title";
+            // 
+            // Author
+            // 
+            this.Author.Text = "Author";
+            // 
+            // Qty
+            // 
+            this.Qty.Text = "Qty";
+            // 
             // buttonAdd
             // 
             this.buttonAdd.Location = new System.Drawing.Point(30, 320);
@@ -164,22 +180,6 @@
             this.buttonRemove.UseVisualStyleBackColor = true;
             this.buttonRemove.Click += new System.EventHandler(this.buttonRemove_Click);
             // 
-            // ISBN
-            // 
-            this.ISBN.Text = "ISBN";
-            // 
-            // Title
-            // 
-            this.Title.Text = "Title";
-            // 
-            // Author
-            // 
-            this.Author.Text = "Author";
-            // 
-            // Qty
-            // 
-            this.Qty.Text = "Qty";
-            // 
             // BookForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -200,6 +200,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "BookForm";
             this.Text = "Book";
+            this.Load += new System.EventHandler(this.BookForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

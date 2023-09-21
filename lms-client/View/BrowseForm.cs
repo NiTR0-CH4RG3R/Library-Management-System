@@ -23,7 +23,20 @@ namespace lms_client.View
             userController = new Controller.UserController();
         }
 
+        private void RefreshListView()
+        {
+            listView.Items.Clear();
+            var books = bookController.GetBooks(GetBookFromForm());
 
+            foreach (var book in books)
+            {
+                ListViewItem item = new ListViewItem(book.ISBN);
+                item.SubItems.Add(book.Title);
+                item.SubItems.Add(book.Author);
+                item.SubItems.Add(book.Qty.ToString());
+                listView.Items.Add(item);
+            }
+        }
 
         private lms_common.Model.Book GetBookFromForm()
         {
@@ -48,16 +61,7 @@ namespace lms_client.View
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
-            var books = bookController.GetBooks(GetBookFromForm());
-
-            foreach (var book in books)
-            {
-                ListViewItem item = new ListViewItem(book.ISBN);
-                item.SubItems.Add(book.Title);
-                item.SubItems.Add(book.Author);
-                item.SubItems.Add(book.Qty.ToString());
-                listView.Items.Add(item);
-            }
+            RefreshListView();
         }
 
         private void buttonBurrow_Click(object sender, EventArgs e)

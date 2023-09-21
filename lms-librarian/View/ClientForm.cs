@@ -24,34 +24,9 @@ namespace lms_librarian.View
             userController = new Controller.UserController();
         }
 
-        private void buttonAdd_Click(object sender, EventArgs e)
+        private void RefreshListView( List<lms_common.Model.User> users )
         {
-
-            string? name = String.IsNullOrWhiteSpace(textBoxName.Text) ? null : textBoxName.Text;
-            string? nic = String.IsNullOrWhiteSpace(textBoxNIC.Text) ? null : textBoxNIC.Text;
-            string? contact = String.IsNullOrWhiteSpace(textBoxContact.Text) ? null : textBoxContact.Text;
-            string? address = String.IsNullOrWhiteSpace(textBoxAddress.Text) ? null : textBoxAddress.Text;
-            string? password = String.IsNullOrWhiteSpace(textBoxPassword.Text) ? null : textBoxPassword.Text;
-
-            userController.AddUser(new lms_common.Model.User { NIC=nic, Name=name, Phone=contact, Address=address, Password=password });
-        }
-
-        private void buttonSearch_Click(object sender, EventArgs e)
-        {
-            //string name = textBoxName.Text;
-            //string nic = textBoxNIC.Text;
-            //string contact = textBoxContact.Text;
-            //string address = textBoxAddress.Text;
-            //string password = textBoxPassword.Text;
-            string? name = String.IsNullOrWhiteSpace(textBoxName.Text) ? null : textBoxName.Text;
-            string? nic = String.IsNullOrWhiteSpace(textBoxNIC.Text) ? null : textBoxNIC.Text;
-            string? contact = String.IsNullOrWhiteSpace(textBoxContact.Text) ? null : textBoxContact.Text;
-            string? address = String.IsNullOrWhiteSpace(textBoxAddress.Text) ? null : textBoxAddress.Text;
-            string? password = String.IsNullOrWhiteSpace(textBoxPassword.Text) ? null : textBoxPassword.Text;
-
-            var users = userController.GetUsers(new lms_common.Model.User { NIC=nic, Name=name, Phone=contact, Address=address, Password=password });
-
-            foreach( var user in users )
+            foreach (var user in users)
             {
                 ListViewItem item = new ListViewItem(user.NIC);
                 item.SubItems.Add(user.Name);
@@ -60,6 +35,28 @@ namespace lms_librarian.View
                 item.SubItems.Add(user.Password);
                 listView.Items.Add(item);
             }
+        }
+
+        private lms_common.Model.User GetUserFromForm()
+        {
+            string? name = String.IsNullOrWhiteSpace(textBoxName.Text) ? null : textBoxName.Text;
+            string? nic = String.IsNullOrWhiteSpace(textBoxNIC.Text) ? null : textBoxNIC.Text;
+            string? contact = String.IsNullOrWhiteSpace(textBoxContact.Text) ? null : textBoxContact.Text;
+            string? address = String.IsNullOrWhiteSpace(textBoxAddress.Text) ? null : textBoxAddress.Text;
+            string? password = String.IsNullOrWhiteSpace(textBoxPassword.Text) ? null : textBoxPassword.Text;
+
+            return new lms_common.Model.User { NIC=nic, Name=name, Phone=contact, Address=address, Password=password };
+        }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            userController.AddUser(GetUserFromForm());
+        }
+
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+            var users = userController.GetUsers(GetUserFromForm());
+            RefreshListView(users);
         }
 
         private void buttonRemove_Click(object sender, EventArgs e)
@@ -75,6 +72,12 @@ namespace lms_librarian.View
         private void listView_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void ClientForm_Load(object sender, EventArgs e)
+        {
+            var users = userController.GetUsers(GetUserFromForm());
+            RefreshListView(users);
         }
     }
 }

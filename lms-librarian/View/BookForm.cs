@@ -31,12 +31,7 @@ namespace lms_librarian.View
             return new lms_common.Model.Book { ISBN = isbn, Title = title, Author = author, Qty = qty };
         }
 
-        private void buttonAdd_Click(object sender, EventArgs e)
-        {
-            bookController.AddBook(GetBookFromForm());
-        }
-
-        private void buttonSearch_Click(object sender, EventArgs e)
+        private void RefreshListView()
         {
             var books = bookController.GetBooks(GetBookFromForm());
             foreach (var book in books)
@@ -49,12 +44,27 @@ namespace lms_librarian.View
             }
         }
 
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            bookController.AddBook(GetBookFromForm());
+        }
+
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+            RefreshListView();
+        }
+
         private void buttonRemove_Click(object sender, EventArgs e)
         {
             if ( listView.SelectedItems.Count > 0 )
                 bookController.RemoveBook(
                     new lms_common.Model.Book { ISBN = listView.SelectedItems[0].Text, Title = null, Author = null, Qty = null }
                 );
+        }
+
+        private void BookForm_Load(object sender, EventArgs e)
+        {
+            RefreshListView();
         }
     }
 }
